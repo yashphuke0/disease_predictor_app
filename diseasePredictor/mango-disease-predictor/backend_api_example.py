@@ -9,10 +9,11 @@ Run locally:
     python backend_api_example.py
 
 Run on Render (dashboard or Procfile):
-    gunicorn backend_api_example:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1
+    gunicorn backend_api_example:app --bind 0.0.0.0:$PORT --timeout 300 --workers 1
 
 Env:
     MODEL_PATH — path to .h5 file (default: public/best_HCNN.h5)
+    CORS_ORIGINS — comma-separated frontend origins (default includes Render + Vite dev)
     PORT — only used when running this file directly (Render sets PORT for gunicorn)
 """
 
@@ -29,7 +30,24 @@ import io
 import base64
 
 app = Flask(__name__)
-CORS(app, origins=["https://disease-predictor-app-1.onrender.com"])
+# Origins that may call this API (browser Origin header). 502s from the proxy carry no CORS headers;
+# fixing timeouts/cold start avoids that. Override on Render: CORS_ORIGINS=https://your-frontend.onrender.com
+_default_cors = (
+    "https://disease-predictor-app-1.onrender.com,"
+    "http://localhost:5173,http://127.0.0.1:5173"
+)
+_cors_origins = [
+    o.strip()
+    for o in os.environ.get("CORS_ORIGINS", _default_cors).split(",")
+    if o.strip()
+]
+CORS(
+    app,
+    origins=_cors_origins,
+    methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
+    max_age=86400,
+)
 
 _model_path = os.environ.get("MODEL_PATH", "public/best_HCNN.h5")
 _model_path = Path(_model_path)
