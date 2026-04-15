@@ -2,6 +2,9 @@
 
 A web application for predicting tomato leaf diseases using deep learning. Users can upload images of tomato leaves (from mobile or desktop) and get instant disease predictions with treatment recommendations.
 
+# Host-Interface Deployed Link:
+https://tomato-disease-prediction.onrender.com
+
 ## Features
 
 - 📸 Upload tomato leaf images from camera or gallery
