@@ -10,11 +10,15 @@ import AboutModel from './components/AboutModel';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
-  const [language, setLanguage] = useState('en'); // 'en' for English, 'mr' for Marathi
+  const [language, setLanguage] = useState('en'); // 'en' for English, 'mr' for Marathi, 'hi' for Hindi
   const [uploadedImage, setUploadedImage] = useState(null);
 
   const toggleLanguage = () => {
-    setLanguage(prev => prev === 'en' ? 'mr' : 'en');
+    setLanguage((prev) => {
+      if (prev === 'en') return 'mr';
+      if (prev === 'mr') return 'hi';
+      return 'en';
+    });
   };
 
   const handleStartScan = () => {

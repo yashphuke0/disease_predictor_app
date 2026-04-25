@@ -48,6 +48,7 @@ const BottomTabBar = ({ currentPage, setCurrentPage, language }) => {
   const texts = {
     en: { home: "Home", diseaseInfo: "Diseases", predict: "Predict", aboutModel: "Info" },
     mr: { home: "मुख्यपृष्ठ", diseaseInfo: "रोग", predict: "अंदाज", aboutModel: "माहिती" },
+    hi: { home: "होम", diseaseInfo: "रोग", predict: "पहचान", aboutModel: "जानकारी" },
   };
 
   const t = texts[language] || texts['en'];

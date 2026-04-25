@@ -21,6 +21,16 @@ const Home = ({ language, onStartScan }) => {
       stat1: "10+", stat1Label: "रोग",
       stat2: "95%", stat2Label: "अचूकता",
       stat3: "< 3s", stat3Label: "निकाल",
+    },
+    hi: {
+      title: "टमाटर रोग पहचानक",
+      subtitle: "अपने टमाटर पौधों की बीमारियों की तुरंत पहचान करें",
+      scanButton: "पौधा स्कैन करें",
+      description: "अपने टमाटर पत्तों की फोटो लें और उपचार सुझावों के साथ तुरंत रोग पहचान प्राप्त करें।",
+      badge: "AI-संचालित पहचान",
+      stat1: "10+", stat1Label: "रोग",
+      stat2: "95%", stat2Label: "सटीकता",
+      stat3: "< 3s", stat3Label: "परिणाम",
     }
   };
 

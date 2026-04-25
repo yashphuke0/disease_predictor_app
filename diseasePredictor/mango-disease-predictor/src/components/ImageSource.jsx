@@ -22,6 +22,16 @@ const ImageSource = ({ language, onCameraSelect, onGallerySelect, onBack }) => {
       galleryDesc: "फोनमधील विद्यमान प्रतिमा निवडा.",
       back: "मागे",
     },
+    hi: {
+      title: "पत्ता अपलोड करें और स्कैन करें",
+      subtitle: "टमाटर पत्ते का स्मार्ट स्कैन शुरू करने के लिए टैप करें।",
+      tapToScan: "टैप करके स्कैन करें",
+      camera: "फोटो लें",
+      gallery: "गैलरी",
+      cameraDesc: "कैमरा से पत्ते की नई फोटो लें।",
+      galleryDesc: "फोन से मौजूदा छवि चुनें।",
+      back: "वापस",
+    },
   };
 
   const currentTexts = texts[language] || texts['en'];

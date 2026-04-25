@@ -4,6 +4,7 @@ const Header = ({ language, toggleLanguage }) => {
   const texts = {
     en: { title: "Tomato Predictor" },
     mr: { title: "टोमॅटो रोगांचा अंदाज" },
+    hi: { title: "टमाटर रोग पूर्वानुमान" },
   };
 
   const t = texts[language] || texts['en'];
@@ -91,6 +92,7 @@ const Header = ({ language, toggleLanguage }) => {
           <button className="hdr-lang-toggle" onClick={toggleLanguage}>
             <span className={`hdr-lang-seg ${language === 'en' ? 'hdr-lang-seg-active' : ''}`}>Eng</span>
             <span className={`hdr-lang-seg ${language === 'mr' ? 'hdr-lang-seg-active' : ''}`}>मराठी</span>
+            <span className={`hdr-lang-seg ${language === 'hi' ? 'hdr-lang-seg-active' : ''}`}>हिंदी</span>
           </button>
         </div>
       </header>

@@ -36,6 +36,16 @@ const Predict = ({ language, uploadedImage, onBack, onNewScan }) => {
       mapCardTitle: "Visit or contact",
       mapCardHint: "Tap the map to open this place in Google Maps",
       mapCardOpen: "Open in Google Maps",
+      imageAlt: "Plant leaf",
+      imageChip: "Tomato Leaf",
+      analysisFailed: "Analysis Failed",
+      retry: "Try Again",
+      backendStartTitle: "To start the backend server:",
+      backendStep1: "Open terminal in your project folder",
+      backendStep2: "Run:",
+      backendStep3: "Run:",
+      backendStep4: "Refresh this page",
+      healthyBannerTitle: "Looking Great!",
     },
     mr: {
       title: "रोग विश्लेषण",
@@ -63,6 +73,53 @@ const Predict = ({ language, uploadedImage, onBack, onNewScan }) => {
       mapCardTitle: "भेट द्या किंवा संपर्क",
       mapCardHint: "Google Maps मध्ये ठिकाण उघडण्यासाठी नकाशावर टॅप करा",
       mapCardOpen: "Google Maps मध्ये उघडा",
+      imageAlt: "वनस्पतीचे पान",
+      imageChip: "टोमॅटो पान",
+      analysisFailed: "विश्लेषण अयशस्वी",
+      retry: "पुन्हा प्रयत्न करा",
+      backendStartTitle: "बॅकएंड सर्व्हर सुरू करण्यासाठी:",
+      backendStep1: "प्रोजेक्ट फोल्डरमध्ये टर्मिनल उघडा",
+      backendStep2: "चालवा:",
+      backendStep3: "चालवा:",
+      backendStep4: "हे पृष्ठ रीफ्रेश करा",
+      healthyBannerTitle: "छान आहे!",
+    },
+    hi: {
+      title: "रोग विश्लेषण",
+      analyzing: "आपके पौधे का विश्लेषण हो रहा है...",
+      identifying: "AI मॉडल चल रहा है",
+      startingServer: "सर्वर शुरू हो रहा है...",
+      serverWakeHint: "फ्री सर्वर को शुरू होने में 30-60 सेकंड लग सकते हैं। कृपया प्रतीक्षा करें...",
+      result: "पहचानी गई स्थिति",
+      confidence: "AI भरोसा",
+      overview: "संक्षिप्त जानकारी",
+      sections: {
+        symptoms: "लक्षण",
+        favorableConditions: "स्थितियां",
+        pesticides: "दवाइयां",
+        physicalAndBiologicalControl: "जैविक नियंत्रण",
+        preventiveMeasures: "रोकथाम",
+      },
+      tryAgain: "दूसरा पौधा स्कैन करें",
+      back: "वापस",
+      severity: "गंभीरता",
+      severityHigh: "उच्च",
+      severityLow: "कम",
+      category: "प्रकार",
+      notAvailable: "इस सेक्शन के लिए जानकारी उपलब्ध नहीं है।",
+      mapCardTitle: "भेंट करें या संपर्क करें",
+      mapCardHint: "Google Maps में यह स्थान खोलने के लिए मैप पर टैप करें",
+      mapCardOpen: "Google Maps में खोलें",
+      imageAlt: "पौधे का पत्ता",
+      imageChip: "टमाटर पत्ता",
+      analysisFailed: "विश्लेषण विफल",
+      retry: "फिर से प्रयास करें",
+      backendStartTitle: "बैकएंड सर्वर शुरू करने के लिए:",
+      backendStep1: "अपने प्रोजेक्ट फोल्डर में टर्मिनल खोलें",
+      backendStep2: "चलाएं:",
+      backendStep3: "चलाएं:",
+      backendStep4: "यह पेज रीफ्रेश करें",
+      healthyBannerTitle: "बहुत बढ़िया!",
     },
   };
 
@@ -70,7 +127,7 @@ const Predict = ({ language, uploadedImage, onBack, onNewScan }) => {
 
   const t = texts[language] || texts['en'];
 
-  const diseaseContent = {
+  const rawDiseaseContent = {
     early_blight: {
       diseaseName: { en: "Early Blight", mr: "आगाट करपा" },
       type: { en: "Fungal", mr: "बुरशीजन्य" },
@@ -195,6 +252,265 @@ const Predict = ({ language, uploadedImage, onBack, onNewScan }) => {
       preventiveMeasures: { en: ["Follow preventive spray schedule as locally advised", "Avoid overwatering and underwatering stress on the plant"], mr: ["स्थानिक सल्ल्यानुसार प्रतिबंधक फवारणी करा", "जास्त/कमी पाण्याचा ताण टाळा"] },
     },
   };
+  const diseaseHindiTranslations = {
+    early_blight: {
+      diseaseName: "अर्ली ब्लाइट",
+      type: "फफूंदजनित",
+      shortDesc: "यह फफूंदजनित रोग पुराने पत्तों पर छल्लेदार भूरे धब्बे बनाता है, जिससे पत्ते पीले होकर जल्दी गिरने लगते हैं।",
+      symptoms: [
+        "निचली पत्तियों पर गोल भूरे/काले छल्लेदार धब्बे बनते हैं।",
+        "धब्बे आपस में मिलते हैं, पत्ते पीले पड़ते हैं और जल्दी झड़ते हैं।",
+      ],
+      favorableConditions: [
+        "24°C-29°C के बीच गर्म तापमान।",
+        "गीला मौसम और 80% से अधिक आर्द्रता।",
+      ],
+      pesticides: [
+        "कॉपर हाइड्रॉक्साइड - 2 ग्राम प्रति लीटर पानी",
+        "मैन्कोजेब 75% WP - 3 ग्राम प्रति लीटर पानी",
+      ],
+      physicalAndBiologicalControl: [
+        "मिट्टी के पास की निचली पत्तियां और शाखाएं छांटें।",
+        "पत्तियों को गीला होने से बचाने के लिए ड्रिप सिंचाई अपनाएं।",
+      ],
+      preventiveMeasures: [
+        "हमेशा प्रमाणित रोगमुक्त बीज का उपयोग करें।",
+        "हवा के अच्छे प्रवाह के लिए उचित पौध दूरी रखें।",
+      ],
+    },
+    late_blight: {
+      diseaseName: "लेट ब्लाइट",
+      type: "फफूंदजनित",
+      shortDesc: "ठंडे और गीले मौसम में तेजी से फैलने वाला गंभीर फफूंदजनित रोग, जिसमें पानी जैसे धब्बे जल्दी काले पड़ जाते हैं।",
+      symptoms: [
+        "पत्तों और तनों पर अनियमित पानी जैसे धब्बे गहरे भूरे/काले हो जाते हैं।",
+        "नम मौसम में पत्तों के नीचे सफेद फफूंद वृद्धि दिखती है।",
+      ],
+      favorableConditions: [
+        "12°C-23°C के बीच ठंडा तापमान।",
+        "बारिश, कोहरा और 90% से अधिक आर्द्रता।",
+      ],
+      pesticides: [
+        "मैन्कोजेब 35% SC - लेबल अनुसार",
+        "कॉपर ऑक्सीक्लोराइड 50 WP - लेबल अनुसार",
+      ],
+      physicalAndBiologicalControl: [
+        "संक्रमित पौधों को तुरंत हटाकर नष्ट करें।",
+        "मिट्टी में Trichoderma asperellum का प्रयोग करें।",
+      ],
+      preventiveMeasures: [
+        "टमाटर और आलू को पास-पास न लगाएं।",
+        "2-3 वर्ष का फसल चक्र अपनाएं।",
+      ],
+    },
+    yellow_leaf_curl_virus: {
+      diseaseName: "येलो लीफ कर्ल वायरस",
+      type: "विषाणुजनित",
+      shortDesc: "सफेद मक्खी से फैलने वाला विषाणु रोग; पत्तियां मुड़ती हैं, पीली पड़ती हैं और पौधे की वृद्धि रुक जाती है।",
+      symptoms: [
+        "पत्तियां ऊपर की ओर मुड़ती हैं और किनारों से पीली होती हैं।",
+        "पौधा बौना रहता है, झाड़ीदार दिखता है और फूल झड़ते हैं।",
+      ],
+      favorableConditions: [
+        "खेत में सक्रिय सफेद मक्खी का प्रकोप।",
+        "गर्म उष्णकटिबंधीय और उपोष्णकटिबंधीय मौसम।",
+      ],
+      pesticides: [
+        "सफेद मक्खी नियंत्रण हेतु नियोनिकोटिनॉइड्स का उपयोग करें।",
+      ],
+      physicalAndBiologicalControl: [
+        "नर्सरी पर कीटरोधी जाली का उपयोग करें।",
+        "प्रारंभिक लक्षण पर संक्रमित पौधे हटाकर नष्ट करें।",
+      ],
+      preventiveMeasures: [
+        "TYLCV-रोधी टमाटर किस्में लगाएं।",
+        "सफेद मक्खी आवास कम करने हेतु मेड़ों पर खरपतवार न बढ़ने दें।",
+      ],
+    },
+    bacterial_spot: {
+      diseaseName: "बैक्टीरियल स्पॉट",
+      type: "जीवाणुजनित",
+      shortDesc: "जीवाणु संक्रमण से पत्तों, तनों और फलों पर गहरे पानी जैसे धब्बे बनते हैं।",
+      symptoms: [
+        "पत्तों, तनों और फलों पर पीले घेरे वाले छोटे गहरे धब्बे।",
+        "अधिक संक्रमण में पत्तियां तेजी से झड़ती हैं और फल दागदार होते हैं।",
+      ],
+      favorableConditions: [
+        "25°C से अधिक गर्म और नम मौसम।",
+        "बारिश की छींटें और ऊपर से सिंचाई से जीवाणु फैलते हैं।",
+      ],
+      pesticides: [
+        "कॉपर आधारित बैक्टीरिसाइड - उत्पाद लेबल अनुसार प्रयोग करें।",
+      ],
+      physicalAndBiologicalControl: [
+        "संक्रमित पत्तियां दिखते ही हटा दें।",
+        "पत्तियां गीली होने पर पौधों को हाथ न लगाएं।",
+      ],
+      preventiveMeasures: [
+        "केवल प्रमाणित रोगमुक्त बीज और पौध उपयोग करें।",
+        "औजार नियमित रूप से, खासकर पौधे बदलते समय, कीटाणुरहित करें।",
+      ],
+    },
+    septoria_leaf_spot: {
+      diseaseName: "सेप्टोरिया लीफ स्पॉट",
+      type: "फफूंदजनित",
+      shortDesc: "छोटे गोल गहरे किनारों वाले धब्बे, जो नीचे की पत्तियों से शुरू होकर ऊपर फैलते हैं।",
+      symptoms: [
+        "हल्के सफेद/धूसर केंद्र और गहरे किनारों वाले छोटे गोल धब्बे।",
+        "भारी संक्रमण में निचली पत्तियों से शुरू होकर जल्दी पत्ती झड़ना।",
+      ],
+      favorableConditions: [
+        "गर्म मौसम और पत्तियों पर लंबे समय तक नमी।",
+        "घना पौध आवरण और कम हवा का प्रवाह।",
+      ],
+      pesticides: [
+        "स्थानीय सिफारिश अनुसार मैन्कोजेब या क्लोरोथैलोनिल।",
+      ],
+      physicalAndBiologicalControl: [
+        "निचली संक्रमित पत्तियां नियमित रूप से छांटकर हटाएं।",
+        "पानी की छींटों से फैलाव घटाने हेतु मिट्टी पर मल्च डालें।",
+      ],
+      preventiveMeasures: [
+        "हर मौसम में फसल चक्र अपनाएं और अवशेष हटाएं।",
+        "सिर्फ जड़ क्षेत्र में पानी दें, ऊपर से सिंचाई न करें।",
+      ],
+    },
+    leaf_mold: {
+      diseaseName: "लीफ मोल्ड",
+      type: "फफूंदजनित",
+      shortDesc: "ग्रीनहाउस में सामान्य रोग; ऊपर पीले धब्बे और नीचे जैतूनी-धूसर फफूंद बनती है।",
+      symptoms: [
+        "पत्तियों की ऊपरी सतह पर पीले धब्बे बनते हैं।",
+        "पत्तियों की निचली सतह पर जैतूनी-धूसर से भूरे रंग की फफूंद बनती है।",
+      ],
+      favorableConditions: [
+        "85% से अधिक आर्द्रता और खराब वेंटिलेशन।",
+      ],
+      pesticides: [
+        "लक्षण दिखते ही उपयुक्त फफूंदनाशी का छिड़काव करें।",
+      ],
+      physicalAndBiologicalControl: [
+        "ग्रीनहाउस का वेंटिलेशन तुरंत सुधारें।",
+        "संक्रमित पत्तियां जल्दी हटाकर अलग करें।",
+      ],
+      preventiveMeasures: [
+        "हवा प्रवाह के लिए पौधों में अधिक भीड़ न होने दें।",
+        "पत्तियां सूखी रखने के लिए ड्रिप सिंचाई अपनाएं।",
+      ],
+    },
+    spider_mites: {
+      diseaseName: "स्पाइडर माइट",
+      type: "कीट",
+      shortDesc: "अत्यंत सूक्ष्म मकड़ी जैसे कीट पत्तियों की कोशिकाएं चूसते हैं, जिससे पीले धब्बे और महीन जाला बनता है।",
+      symptoms: [
+        "पत्तियों की ऊपरी सतह पर बहुत छोटे पीले या कांस्य धब्बे।",
+        "पत्तियों की निचली सतह पर महीन रेशमी जाला।",
+      ],
+      favorableConditions: [
+        "गर्म और शुष्क मौसम में इनकी संख्या तेजी से बढ़ती है।",
+      ],
+      pesticides: [
+        "अनुशंसित माइटिसाइड या कीटनाशी साबुन स्प्रे का उपयोग करें।",
+      ],
+      physicalAndBiologicalControl: [
+        "माइट हटाने के लिए पत्तियों की निचली सतह पर तेज पानी छिड़कें।",
+        "शिकारी (लाभकारी) माइट्स का संरक्षण करें।",
+      ],
+      preventiveMeasures: [
+        "नियमित निगरानी करें और संख्या बढ़ने से पहले नियंत्रण करें।",
+        "अधिक नाइट्रोजन उर्वरक देने से बचें।",
+      ],
+    },
+    target_spot: {
+      diseaseName: "टारगेट स्पॉट",
+      type: "फफूंदजनित",
+      shortDesc: "पत्तों, तनों और फलों पर लक्ष्य जैसे छल्लेदार धब्बे बनते हैं।",
+      symptoms: [
+        "एक के अंदर एक छल्लों वाले गोल धब्बे (bullseye जैसे)।",
+        "नम मौसम में धब्बे तेजी से बढ़कर आपस में मिलते हैं।",
+      ],
+      favorableConditions: [
+        "गर्म और नम वातावरण तथा पत्तियों पर लंबे समय तक नमी।",
+      ],
+      pesticides: [
+        "स्थानीय कृषि सलाह अनुसार पंजीकृत फफूंदनाशी उपयोग करें।",
+      ],
+      physicalAndBiologicalControl: [
+        "संक्रमित पत्तियां और फसल अवशेष खेत से हटाएं।",
+        "छंटाई करके हवा का प्रवाह बढ़ाएं।",
+      ],
+      preventiveMeasures: [
+        "उचित पौध दूरी रखें और पत्तियां गीली रहने से बचाएं।",
+        "हर मौसम में फसल चक्र अपनाएं।",
+      ],
+    },
+    tomato_mosaic_virus: {
+      diseaseName: "टमाटर मोज़ेक वायरस",
+      type: "विषाणुजनित",
+      shortDesc: "रस, औजार और हाथों से फैलने वाला अत्यधिक संक्रामक विषाणु; पत्तियों पर मोज़ेक पैटर्न और विकृति बनती है।",
+      symptoms: [
+        "पत्तियों पर हल्के-गहरे हरे मोज़ेक/चित्तीदार पैटर्न।",
+        "पत्तियां विकृत, मुड़ी हुई और पौधे की ताकत कम हो जाती है।",
+      ],
+      favorableConditions: [
+        "संक्रमित रस, औजार और हाथों से खेत कार्य के दौरान तेजी से फैलाव।",
+      ],
+      pesticides: [
+        "सीधा रासायनिक इलाज नहीं - स्वच्छता और वाहक नियंत्रण पर ध्यान दें।",
+      ],
+      physicalAndBiologicalControl: [
+        "संक्रमित पौधे तुरंत हटाकर नष्ट करें।",
+        "छंटाई के दौरान हर पौधे के बीच औजार कीटाणुरहित करें।",
+      ],
+      preventiveMeasures: [
+        "केवल प्रमाणित विषाणुमुक्त पौध/नर्सरी सामग्री का उपयोग करें।",
+        "पौधों को संभालते समय हाथ धोएं और तंबाकू संपर्क से बचें।",
+      ],
+    },
+    healthy: {
+      diseaseName: "स्वस्थ पौधा",
+      type: "स्वस्थ",
+      shortDesc: "बहुत अच्छी बात! आपके पौधे में रोग या कीट क्षति के स्पष्ट लक्षण नहीं हैं।",
+      symptoms: [
+        "पत्तियों का रंग प्राकृतिक और एकसमान है, कोई असामान्य धब्बा नहीं।",
+        "घाव, फफूंद, जाला या मुरझाहट नहीं दिखती।",
+      ],
+      favorableConditions: [
+        "संतुलित पोषण, उचित सिंचाई और अच्छा वायु प्रवाह बना हुआ है।",
+      ],
+      pesticides: [
+        "पौधा स्वस्थ है - फिलहाल दवा की आवश्यकता नहीं, केवल निगरानी जारी रखें।",
+      ],
+      physicalAndBiologicalControl: [
+        "शुरुआती पहचान हेतु नियमित खेत निरीक्षण जारी रखें।",
+        "खेत स्वच्छ रखें और खरपतवार हटाते रहें।",
+      ],
+      preventiveMeasures: [
+        "स्थानीय सलाह अनुसार निवारक स्प्रे शेड्यूल का पालन करें।",
+        "अधिक या कम सिंचाई से होने वाले तनाव से बचाएं।",
+      ],
+    },
+  };
+
+  const mergeHindiDisease = (key, disease) => {
+    const hi = diseaseHindiTranslations[key];
+    if (!hi) return disease;
+    return {
+      ...disease,
+      diseaseName: { ...disease.diseaseName, hi: hi.diseaseName },
+      type: { ...disease.type, hi: hi.type },
+      shortDesc: { ...disease.shortDesc, hi: hi.shortDesc },
+      symptoms: { ...disease.symptoms, hi: hi.symptoms },
+      favorableConditions: { ...disease.favorableConditions, hi: hi.favorableConditions },
+      pesticides: { ...disease.pesticides, hi: hi.pesticides },
+      physicalAndBiologicalControl: { ...disease.physicalAndBiologicalControl, hi: hi.physicalAndBiologicalControl },
+      preventiveMeasures: { ...disease.preventiveMeasures, hi: hi.preventiveMeasures },
+    };
+  };
+
+  const diseaseContent = Object.fromEntries(
+    Object.entries(rawDiseaseContent).map(([key, value]) => [key, mergeHindiDisease(key, value)])
+  );
 
   const modelToDiseaseId = {
     Tomato___Early_blight: "early_blight",
@@ -255,16 +571,16 @@ const Predict = ({ language, uploadedImage, onBack, onNewScan }) => {
         confidence: result.confidence,
         diseaseId: mappedId,
         data: data || {
-          diseaseName: { en: result.disease.replace(/Tomato___/g, '').replace(/_/g, ' '), mr: result.disease.replace(/Tomato___/g, '').replace(/_/g, ' ') },
-          type: { en: "Unknown", mr: "अज्ञात" },
+          diseaseName: { en: result.disease.replace(/Tomato___/g, '').replace(/_/g, ' '), mr: result.disease.replace(/Tomato___/g, '').replace(/_/g, ' '), hi: result.disease.replace(/Tomato___/g, '').replace(/_/g, ' ') },
+          type: { en: "Unknown", mr: "अज्ञात", hi: "अज्ञात" },
           icon: "❓",
           color: "#6b7280",
-          shortDesc: { en: `${result.disease} detected. Consult an agricultural expert.`, mr: `${result.disease} आढळला. कृषी तज्ञांचा सल्ला घ्या.` },
-          symptoms: { en: ["Consult with a local agricultural expert for details."], mr: ["तपशीलासाठी स्थानिक कृषी तज्ञांचा सल्ला घ्या."] },
-          favorableConditions: { en: ["Use local weather and field scouting to assess risk."], mr: ["हवामान आणि शेतनिरीक्षणावर आधारित जोखीम तपासा."] },
-          pesticides: { en: ["Consult with agricultural expert for specific treatment."], mr: ["योग्य उपचारांसाठी कृषी तज्ञांचा सल्ला घ्या."] },
-          physicalAndBiologicalControl: { en: ["Remove visibly affected leaves and maintain sanitation."], mr: ["दिसणारी संक्रमित पाने काढा आणि स्वच्छता राखा."] },
-          preventiveMeasures: { en: ["Follow general plant care practices."], mr: ["सामान्य पिक व्यवस्थापन पद्धती पाळा."] },
+          shortDesc: { en: `${result.disease} detected. Consult an agricultural expert.`, mr: `${result.disease} आढळला. कृषी तज्ञांचा सल्ला घ्या.`, hi: `${result.disease} पाया गया। कृषि विशेषज्ञ से सलाह लें।` },
+          symptoms: { en: ["Consult with a local agricultural expert for details."], mr: ["तपशीलासाठी स्थानिक कृषी तज्ञांचा सल्ला घ्या."], hi: ["विस्तृत जानकारी के लिए स्थानीय कृषि विशेषज्ञ से सलाह लें।"] },
+          favorableConditions: { en: ["Use local weather and field scouting to assess risk."], mr: ["हवामान आणि शेतनिरीक्षणावर आधारित जोखीम तपासा."], hi: ["जोखिम आकलन के लिए स्थानीय मौसम और खेत निरीक्षण का उपयोग करें।"] },
+          pesticides: { en: ["Consult with agricultural expert for specific treatment."], mr: ["योग्य उपचारांसाठी कृषी तज्ञांचा सल्ला घ्या."], hi: ["उपयुक्त उपचार के लिए कृषि विशेषज्ञ से सलाह लें।"] },
+          physicalAndBiologicalControl: { en: ["Remove visibly affected leaves and maintain sanitation."], mr: ["दिसणारी संक्रमित पाने काढा आणि स्वच्छता राखा."], hi: ["प्रभावित पत्ते हटाएं और स्वच्छता बनाए रखें।"] },
+          preventiveMeasures: { en: ["Follow general plant care practices."], mr: ["सामान्य पिक व्यवस्थापन पद्धती पाळा."], hi: ["सामान्य पौधा देखभाल पद्धतियां अपनाएं।"] },
         },
       });
     } catch (err) {
@@ -534,28 +850,28 @@ const Predict = ({ language, uploadedImage, onBack, onNewScan }) => {
         {/* Uploaded image */}
         {uploadedImage && (
           <div className="pp2-img-wrap">
-            <img src={uploadedImage} alt="Plant leaf" />
+            <img src={uploadedImage} alt={t.imageAlt} />
             <div className="pp2-img-gradient" />
-            <span className="pp2-img-chip">🍃 Tomato Leaf</span>
+            <span className="pp2-img-chip">🍃 {t.imageChip}</span>
           </div>
         )}
 
         {/* Error */}
         {error && (
           <div className="pp2-error">
-            <p className="pp2-error-h">⚠ Analysis Failed</p>
+            <p className="pp2-error-h">⚠ {t.analysisFailed}</p>
             <p className="pp2-error-msg">{error}</p>
             {apiAvailable !== false && (
-              <button className="pp2-retry-btn" onClick={performPrediction}>Try Again</button>
+              <button className="pp2-retry-btn" onClick={performPrediction}>{t.retry}</button>
             )}
             {apiAvailable === false && (
               <div className="pp2-api-steps">
-                <strong>To start the backend server:</strong>
+                <strong>{t.backendStartTitle}</strong>
                 <ol style={{ marginTop: 6 }}>
-                  <li>Open terminal in your project folder</li>
-                  <li>Run: <code>pip install flask flask-cors tensorflow pillow numpy</code></li>
-                  <li>Run: <code>python backend_api_example.py</code></li>
-                  <li>Refresh this page</li>
+                  <li>{t.backendStep1}</li>
+                  <li>{t.backendStep2} <code>pip install flask flask-cors tensorflow pillow numpy</code></li>
+                  <li>{t.backendStep3} <code>python backend_api_example.py</code></li>
+                  <li>{t.backendStep4}</li>
                 </ol>
               </div>
             )}
@@ -596,7 +912,7 @@ const Predict = ({ language, uploadedImage, onBack, onNewScan }) => {
                 <div className="pp2-healthy-banner">
                   <span className="pp2-healthy-icon">🌿</span>
                   <div>
-                    <p className="pp2-healthy-title">Looking Great!</p>
+                    <p className="pp2-healthy-title">{t.healthyBannerTitle}</p>
                     <p className="pp2-healthy-sub">{desc}</p>
                   </div>
                 </div>
